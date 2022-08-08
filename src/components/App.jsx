@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { GlobalStyle } from "./base/GlobalStyle";
-import { Box } from "./box/box";
+import { GlobalStyle } from "./Base/GlobalStyle";
+import { Box } from "./Box/box";
 import { PhonebookForm } from "./Form/Form";
 import { ContactsList } from "./Contacts/Contacts";
 import { nanoid } from "nanoid";

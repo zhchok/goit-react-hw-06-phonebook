@@ -1,4 +1,4 @@
-import { Box } from "components/box/box";
+import { Box } from "components/Box/box";
 import { nanoid } from "nanoid";
 import { Text, InputSearch, SearchLabel } from "./SearchBox.styled";
 
