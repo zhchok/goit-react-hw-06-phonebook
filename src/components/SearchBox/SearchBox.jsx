@@ -6,7 +6,7 @@ export function SearchBox({ value, onChange }) {
 	const loginInputId = nanoid();
 
 	return (
-		<Box mb={3}>
+		<Box mb={4}>
 			<Text>Find contacts by name</Text>
 			<InputSearch
 				name="contact"

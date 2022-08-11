@@ -5,7 +5,7 @@ export function ContactsList({ contacts, onDeleteContact }) {
 	return (
 		<Box>
 			<Title>Contacts</Title>
-			<ul>
+			<Box as="ul" m="0 auto" maxWidth="350px">
 				{contacts.map(({ id, name, number }) => (
 					<Item key={id}>
 						<Contact>
@@ -19,7 +19,7 @@ export function ContactsList({ contacts, onDeleteContact }) {
 						</Button>
 					</Item>
 				))}
-			</ul>
+			</Box>
 		</Box>
 	);
 }

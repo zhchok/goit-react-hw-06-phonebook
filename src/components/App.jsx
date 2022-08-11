@@ -10,7 +10,6 @@ import { useState } from "react";
 export function App() {
 	const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem("contacts")) ?? []);
 	const [filter, setFilter] = useState("");
-	console.log(contacts);
 
 	useEffect(() => {
 		localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -43,19 +42,20 @@ export function App() {
 	const filtredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
 
 	return (
-		<Box textAlign="center" margin="0 auto" width="500px">
+		<Box as="main" fontFamily='"Walter Turncoat", cursive' textAlign="center" margin="0 auto" width="1200px">
 			<GlobalStyle />
 
 			<PhonebookForm onSubmit={addContact} />
 
-			<>
-				<SearchBox value={filter} onChange={changeFilter} />
-				<ContactsList contacts={filtredContacts} onDeleteContact={deleteContact}></ContactsList>
-			</>
+			<SearchBox value={filter} onChange={changeFilter} />
 
-			<Box mt={4}>
-				<p>You dont have contacts, add your first contact 😉</p>
-			</Box>
+			{contacts.length > 0 ? (
+				<ContactsList contacts={filtredContacts} onDeleteContact={deleteContact}></ContactsList>
+			) : (
+				<Box as="p" mt={4}>
+					You dont have contacts, add your first contact 😉
+				</Box>
+			)}
 		</Box>
 	);
 }

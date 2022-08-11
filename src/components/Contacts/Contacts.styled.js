@@ -12,10 +12,8 @@ export const Item = styled.li`
 
 export const Contact = styled.p`
 	font-size: ${p => p.theme.fontSizes.m};
-	font-family: "Walter Turncoat", cursive;
 `;
 export const Title = styled.h2`
-	font-family: "Walter Turncoat", cursive;
 	font-size: ${p => p.theme.fontSizes.l};
 	margin-bottom: ${p => p.theme.space[4]}px;
 `;

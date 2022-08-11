@@ -1,16 +1,13 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as yup from "yup";
+import { Label, Input } from "./Form.styled";
+import { Box } from "components/Box/box";
 
 const schema = yup.object().shape({
 	name: yup.string().required(),
 	number: yup.number().min(3).required(),
 });
-
-const initialValues = {
-	name: "",
-	number: "",
-};
 
 export const PhonebookForm = ({ onSubmit }) => {
 	const handleSubmit = (values, { resetForm }) => {
@@ -18,20 +15,29 @@ export const PhonebookForm = ({ onSubmit }) => {
 		resetForm();
 	};
 	return (
-		<Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleSubmit}>
-			<Form>
-				<label>
-					<span>Name</span>
-					<Field type="text" name="name" />
-					<ErrorMessage name="name" component="div" />
-				</label>
-				<label>
-					<span>Number</span>
-					<Field type="tel" name="number" />
-					<ErrorMessage name="number" component="div" />
-				</label>
-				<button type="submit">Add contact</button>
-			</Form>
-		</Formik>
+		<Box mb={4} pt={3}>
+			<Formik
+				initialValues={{
+					name: "",
+					number: "",
+				}}
+				validationSchema={schema}
+				onSubmit={handleSubmit}
+			>
+				<Form>
+					<Label>
+						<span>Name</span>
+						<Input type="text" name="name" />
+						<ErrorMessage name="name" component="div" />
+					</Label>
+					<Label>
+						<span>Number</span>
+						<Input type="tel" name="number" />
+						<ErrorMessage name="number" component="div" />
+					</Label>
+					<button type="submit">Add contact</button>
+				</Form>
+			</Formik>
+		</Box>
 	);
 };
