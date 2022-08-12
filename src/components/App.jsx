@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { nanoid } from "nanoid";
+import { Report } from "notiflix/build/notiflix-report-aio";
+
 import { GlobalStyle } from "./Base/GlobalStyle";
 import { Box } from "./Box/box";
-import { PhonebookForm } from "./Form/Form";
 import { ContactsList } from "./Contacts/Contacts";
-import { nanoid } from "nanoid";
+import { PhonebookForm } from "./Form/Form";
 import { SearchBox } from "./SearchBox/SearchBox";
-import { useState } from "react";
 
 export function App() {
 	const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem("contacts")) ?? []);
@@ -23,7 +25,7 @@ export function App() {
 		};
 
 		if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-			alert(`${name} is already in contacts.`);
+			Report.failure(`${name} `, "Contact is already in contacts.");
 			return;
 		}
 
@@ -46,7 +48,6 @@ export function App() {
 			<GlobalStyle />
 
 			<PhonebookForm onSubmit={addContact} />
-
 			<SearchBox value={filter} onChange={changeFilter} />
 
 			{contacts.length > 0 ? (
@@ -59,3 +60,11 @@ export function App() {
 		</Box>
 	);
 }
+
+// const value = useSelector(state => state.myValue);
+// const dispatch = useDispatch();
+
+/* <div>
+	{value} <button onClick={() => dispatch(increment(1))}>increment</button>
+	<button onClick={() => dispatch(decrement(1))}>decrement</button>
+</div>; */

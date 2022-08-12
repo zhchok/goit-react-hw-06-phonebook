@@ -1,6 +1,9 @@
-import { Box } from "components/Box/box";
 import { AiOutlineUserDelete } from "react-icons/ai";
+
+import { Box } from "components/Box/box";
+
 import { Button, Contact, Icon, Item, Text, Title } from "./Contacts.styled";
+
 export function ContactsList({ contacts, onDeleteContact }) {
 	return (
 		<Box>

@@ -15,5 +15,16 @@
 	"trailingComma": "all",
 	"useTabs": true,
 	"vueIndentScriptAndStyle": false,
-	"singleAttributePerLine": false
+	"singleAttributePerLine": false,
+	"importOrder": [
+		"^(react/(.*)$)|^(react$)",
+		"<THIRD_PARTY_MODULES>",
+		"^components/(.*)$",
+		"^utils/(.*)$",
+		"^assets/(.*)$",
+		"^@fontsource/(.*)$",
+		"^[./]"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
 }

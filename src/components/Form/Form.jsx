@@ -1,8 +1,10 @@
-import React from "react";
-import { Formik, Form, ErrorMessage } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import * as yup from "yup";
-import { Label, Input } from "./Form.styled";
+
 import { Box } from "components/Box/box";
+
+import { Input, Label } from "./Form.styled";
 
 const schema = yup.object().shape({
 	name: yup.string().required(),
@@ -28,12 +30,15 @@ export const PhonebookForm = ({ onSubmit }) => {
 					<Label>
 						<span>Name</span>
 						<Input type="text" name="name" />
-						<ErrorMessage name="name" component="div" />
+						<ErrorMessage name="name" render={() => Notify.failure("Field name is required")} />
 					</Label>
 					<Label>
 						<span>Number</span>
 						<Input type="tel" name="number" />
-						<ErrorMessage name="number" component="div" />
+						<ErrorMessage
+							name="number"
+							render={() => Notify.failure("Field number is required and must be contain only numbers")}
+						/>
 					</Label>
 					<button type="submit">Add contact</button>
 				</Form>
