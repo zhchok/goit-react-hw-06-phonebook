@@ -6,7 +6,7 @@ import { Box } from "components/Box/box";
 
 import { InputSearch, SearchLabel, Text } from "./SearchBox.styled";
 
-export function SearchBox({ value, onChange }) {
+export function SearchBox() {
 	const dispatch = useDispatch();
 	const loginInputId = nanoid();
 	const filter = useSelector(state => state.contacts.filter);
