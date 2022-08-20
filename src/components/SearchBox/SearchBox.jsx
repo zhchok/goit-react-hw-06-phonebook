@@ -1,9 +1,19 @@
-import { Box } from "components/Box/box";
 import { nanoid } from "nanoid";
-import { Text, InputSearch, SearchLabel } from "./SearchBox.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { search } from "redux/contactSlice";
+
+import { Box } from "components/Box/box";
+
+import { InputSearch, SearchLabel, Text } from "./SearchBox.styled";
 
 export function SearchBox({ value, onChange }) {
+	const dispatch = useDispatch();
 	const loginInputId = nanoid();
+	const filter = useSelector(state => state.contacts.filter);
+
+	const changeFilter = e => {
+		dispatch(search(e.currentTarget.value));
+	};
 
 	return (
 		<Box mb={4}>
@@ -12,9 +22,9 @@ export function SearchBox({ value, onChange }) {
 				name="contact"
 				className="input-search"
 				id={loginInputId}
-				value={value}
+				value={filter}
 				type="text"
-				onChange={onChange}
+				onChange={changeFilter}
 			/>
 			<SearchLabel className="search" htmlFor={loginInputId}></SearchLabel>
 		</Box>
