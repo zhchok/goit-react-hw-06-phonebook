@@ -1,5 +1,9 @@
 import { ErrorMessage, Form, Formik } from "formik";
+import { nanoid } from "nanoid";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { Report } from "notiflix/build/notiflix-report-aio";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "redux/contactSlice";
 import * as yup from "yup";
 
 import { Box } from "components/Box/box";
@@ -11,11 +15,26 @@ const schema = yup.object().shape({
 	number: yup.number().min(3).required(),
 });
 
-export const PhonebookForm = ({ onSubmit }) => {
+export const PhonebookForm = () => {
+	const contacts = useSelector(state => state.contacts.items);
+	const dispatch = useDispatch();
+
 	const handleSubmit = (values, { resetForm }) => {
-		onSubmit(values.name, values.number);
+		const contact = {
+			id: nanoid(),
+			name: values.name,
+			number: values.number,
+		};
+
+		if (contacts.find(contact => contact.name.toLowerCase() === values.name.toLowerCase())) {
+			Report.failure(`${values.name} `, "Contact is already in contacts.");
+			return;
+		}
+
+		dispatch(add(contact));
 		resetForm();
 	};
+
 	return (
 		<Box mb={4} pt={3}>
 			<Formik

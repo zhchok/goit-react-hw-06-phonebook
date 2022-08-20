@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { nanoid } from "nanoid";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,25 +14,6 @@ export function App() {
 	const filter = useSelector(state => state.contacts.filter);
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		localStorage.setItem("contacts", JSON.stringify(contacts));
-	}, [contacts]);
-
-	const addContact = (name, number) => {
-		const contact = {
-			id: nanoid(),
-			name,
-			number,
-		};
-
-		if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-			Report.failure(`${name} `, "Contact is already in contacts.");
-			return;
-		}
-
-		dispatch(add(contact));
-	};
-
 	const changeFilter = e => {
 		dispatch(search(e.currentTarget.value));
 	};
@@ -46,7 +25,7 @@ export function App() {
 		<Box as="main" textAlign="center" margin="0 auto" width="1200px">
 			<GlobalStyle />
 
-			<PhonebookForm onSubmit={addContact} />
+			<PhonebookForm />
 			<SearchBox value={filter} onChange={changeFilter} />
 
 			{contacts.length > 0 ? (
