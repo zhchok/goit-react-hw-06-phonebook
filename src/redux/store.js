@@ -1,24 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from "redux-persist";
 
-import { userSlice } from "./userSlice";
+import { contactReducer } from "./contactSlice";
 
 export const store = configureStore({
 	reducer: {
-		user: userSlice.reducer,
+		contacts: contactReducer,
 	},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		}),
 });
 
-// export const mySlice = createSlice({
-// 	name: "myValue",
-// 	initialState: 0,
-// 	reducers: {
-// 		increment(state, action) {
-// 			return state + action.payload;
-// 		},
-// 		decrement(state, action) {
-// 			return state - action.payload;
-// 		},
-// 	},
-// });
-
-// export const { increment, decrement } = mySlice.actions;
+export const persistor = persistStore(store);

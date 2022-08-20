@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { nanoid } from "nanoid";
 import { Report } from "notiflix/build/notiflix-report-aio";
+import { useDispatch, useSelector } from "react-redux";
+import { add, search } from "redux/contactSlice";
 
 import { GlobalStyle } from "./Base/GlobalStyle";
 import { Box } from "./Box/box";
@@ -10,8 +12,9 @@ import { PhonebookForm } from "./Form/Form";
 import { SearchBox } from "./SearchBox/SearchBox";
 
 export function App() {
-	const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem("contacts")) ?? []);
-	const [filter, setFilter] = useState("");
+	const contacts = useSelector(state => state.contacts.items);
+	const filter = useSelector(state => state.contacts.filter);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -29,29 +32,25 @@ export function App() {
 			return;
 		}
 
-		setContacts(prevState => [contact, ...prevState]);
-	};
-
-	const deleteContact = contactId => {
-		setContacts(contacts.filter(({ id }) => id !== contactId));
+		dispatch(add(contact));
 	};
 
 	const changeFilter = e => {
-		setFilter(e.currentTarget.value);
+		dispatch(search(e.currentTarget.value));
 	};
 
 	const normalizedFilter = filter.toLocaleLowerCase();
 	const filtredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
 
 	return (
-		<Box as="main" fontFamily='"Walter Turncoat", cursive' textAlign="center" margin="0 auto" width="1200px">
+		<Box as="main" textAlign="center" margin="0 auto" width="1200px">
 			<GlobalStyle />
 
 			<PhonebookForm onSubmit={addContact} />
 			<SearchBox value={filter} onChange={changeFilter} />
 
 			{contacts.length > 0 ? (
-				<ContactsList contacts={filtredContacts} onDeleteContact={deleteContact}></ContactsList>
+				<ContactsList contacts={filtredContacts}></ContactsList>
 			) : (
 				<Box as="p" mt={4}>
 					You dont have contacts, add your first contact 😉
@@ -60,11 +59,3 @@ export function App() {
 		</Box>
 	);
 }
-
-// const value = useSelector(state => state.myValue);
-// const dispatch = useDispatch();
-
-/* <div>
-	{value} <button onClick={() => dispatch(increment(1))}>increment</button>
-	<button onClick={() => dispatch(decrement(1))}>decrement</button>
-</div>; */

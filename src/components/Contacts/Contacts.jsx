@@ -1,10 +1,14 @@
 import { AiOutlineUserDelete } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { remove } from "redux/contactSlice";
 
 import { Box } from "components/Box/box";
 
 import { Button, Contact, Icon, Item, Text, Title } from "./Contacts.styled";
 
-export function ContactsList({ contacts, onDeleteContact }) {
+export function ContactsList({ contacts }) {
+	const dispatch = useDispatch();
+
 	return (
 		<Box>
 			<Title>Contacts</Title>
@@ -14,7 +18,7 @@ export function ContactsList({ contacts, onDeleteContact }) {
 						<Contact>
 							{name} : {number}
 						</Contact>
-						<Button type="button" onClick={() => onDeleteContact(id)}>
+						<Button type="button" onClick={() => dispatch(remove(id))}>
 							<Text className="text">Delete</Text>
 							<Icon className="icon">
 								<AiOutlineUserDelete size="24px" fill="#eee" />
